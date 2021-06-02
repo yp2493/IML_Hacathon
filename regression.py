@@ -1,4 +1,7 @@
-
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 ################################################
 #
 #     Task 1 - predict movies revenue & ranking
@@ -14,6 +17,26 @@ def predict(csv_file):
     :return: a tuple - (a python list with the movies revenues, a python list with the movies avg_votes)
     """
 
-    #your code goes here...
+    data = pd.read_csv(csv_file)
+    return data
 
-    pass
+
+data = predict("movies_dataset.csv")
+data["hasHomepage"] = np.where(data["homepage"].isna(), 1, 0)
+data = data.drop(columns=['id'])
+data = data[data.runtime.notna()]
+data.insert(0, 'intercept', 1, True)
+# data.info()
+
+
+# data.corr()
+# data["hasHomePage"] = np.where(type(data["homepage"]) == str, 1, 0)
+# fig, ax = plt.subplots(figsize=(22, 22))
+# plot heatmap
+
+# sns.heatmap(data.corr(), cmap='YlGnBu', annot=True, linewidths = 0.2);
+
+# plt.show()
+
+
+
