@@ -1,8 +1,21 @@
 import pandas as pd
 import re
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 
-x=pd.read_csv("movies_dataset.csv")
-print(x[x["runtime"]==0])
-# print(x.columns)
 
-dsfdsfds
+vectorizer=CountVectorizer(ngram_range=(1,2))
+corpus = [
+    'This is the first document.',
+    'This is the second second document.',
+    'And the third one.',
+    'Is this the first document?',
+    "Is this"
+]
+x = vectorizer.fit_transform(corpus)
+print(x.toarray().shape)
+transformer=TfidfTransformer(smooth_idf=False)
+tf=transformer.fit_transform(x.toarray())
+print(tf.toarray().shape)
+print(x.toarray())
+print(tf.toarray())
+
