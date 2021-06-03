@@ -8,7 +8,7 @@ from sklearn.feature_selection import SelectPercentile
 vectorizer=TfidfVectorizer(ngram_range=(1,2), decode_error="replace")
 data=pd.read_csv("movies_dataset.csv")
 # x=vectorizer.fit_transform(data["overview"])
-# print(x.shape)
+print(x.shape)
 # print(data["overview"])
 x=vectorizer.fit_transform(data["title"])
 
