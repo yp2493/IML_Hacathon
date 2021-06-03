@@ -5,6 +5,35 @@
 #
 ################################################
 
+from sklearn.preprocessing import MultiLabelBinarizer
+import pandas as pd
+import json
+from ast import literal_eval
+import category_encoders as ce
+
+
+def get_json_names(json_dicts):
+    return str([dict['name'] for dict in json_dicts])
+
+def json_to_dummies(df):
+    """
+    This function converts columns with json values in to dummy vars
+    :param df: original pandas data frame
+    :return:
+    """
+    columns = ['production_countries', 'genres', 'production_companies']
+    for col in columns:
+        mlb = ce.BinaryEncoder()
+        df1 = pd.DataFrame(mlb.fit_transform(df.pop(col).apply(
+            get_json_names)),
+                        columns=mlb.get_feature_names())
+        df = df.join(df1)
+    return df
+
+def preprocess(df):
+    # Transform json columns to dummy vars using binary encoding
+    df = json_to_dummies(df)
+    return df
 
 def predict(csv_file):
     """
@@ -17,3 +46,5 @@ def predict(csv_file):
     #your code goes here...
 
     pass
+
+
